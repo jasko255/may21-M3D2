@@ -17,6 +17,7 @@
     <h1>Search</h1>
     <button type="button" onclick="loadSongs()" class="btn btn-success">Success</button>
   </div>
+  <div class="music text-center"></div>
 
     <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
@@ -33,9 +34,17 @@ fetch("https://deezerdevs-deezer.p.rapidapi.com/search?q=eminem", {
 		"x-rapidapi-host": "deezerdevs-deezer.p.rapidapi.com"
 	}
 })
-// .then((response) => response.json() )
-.then(response => {
-	console.log(response);
+.then((response) => response.json() )
+.then(jsondata => {
+	console.log(jsondata);
+    let music = jsondata.data
+    for (let i=0; i<music.length; i++){
+        let singleData=music[i]
+        let single = document.createElement('img')
+        single.src = singleData.album.cover_big
+        single.classList.add('cover', 'img-fluid')
+        document.querySelector('.music').appendChild(single)
+    }
 })
 .catch(err => {
 	console.error(err);
